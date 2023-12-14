@@ -16,7 +16,7 @@ public class Meteor extends Actor{
     public void act(){
         setLocation(xPos, yPos); // Set location of the meteor
         
-        MyWorld world = (MyWorld) getWorld();
+        SpaceShooter world = (SpaceShooter) getWorld();
         yPos += (2 + world.speedMod); // Allows the meteor to slowly fall down
         
         // Remove self and take away lives if touching ground

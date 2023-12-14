@@ -1,6 +1,6 @@
 import greenfoot.*;  
 
-public class MyWorld extends World{
+public class SpaceShooter extends World{
     public int score = 0;
     public int lives = 3;
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
@@ -9,7 +9,7 @@ public class MyWorld extends World{
     Meteor basic = new Meteor(0, 0, 1, 1);
     
     
-    public MyWorld(){    
+    public SpaceShooter(){    
         super(400, 800, 1);
     }
     
@@ -27,3 +27,4 @@ public class MyWorld extends World{
         lives += amount;    
     }
 }
+
