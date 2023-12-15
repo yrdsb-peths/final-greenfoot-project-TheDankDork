@@ -22,7 +22,8 @@ public class Meteor extends Actor{
         // Remove self and take away lives if touching ground
         if(isTouchingGround()){
             world.modifyLives(-livesTaken);
-            world.removeObject(this);             
+            world.removeObject(this);
+            world.spawnBasic();
         }
     }
     

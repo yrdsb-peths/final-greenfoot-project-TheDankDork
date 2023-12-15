@@ -5,11 +5,11 @@ public class Player extends Actor{
     public static int speed = 1;
     public static int bullets = 1;
     
-    public Player(int size, int speed, int bullets){
+    public Player(int size, int speed, int bullets, int rotation){
         this.size = size;
         this.speed = speed;
         this.bullets = bullets;
-        turn(-90);
+        turn(rotation);
     }
     
     public void act(){
