@@ -5,7 +5,7 @@ public class SpaceShooter extends World{
     public int lives = 3;
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
     
-    Player player = new Player(1, 4, 1, -90);
+    Player player = new Player(1, 4, 1, 50, -90);
     Meteor basic = new Meteor(0, 0, 1, 1);
     
     

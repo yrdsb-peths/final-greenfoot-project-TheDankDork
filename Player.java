@@ -4,11 +4,14 @@ public class Player extends Actor{
     public static int size = 1;
     public static int speed = 1;
     public static int bullets = 1;
+    public static int atkSpd = 1;
+    int attackGauge;
     
-    public Player(int size, int speed, int bullets, int rotation){
+    public Player(int size, int speed, int bullets, int atkSpd, int rotation){
         this.size = size;
         this.speed = speed;
         this.bullets = bullets;
+        this.atkSpd = atkSpd;
         turn(rotation);
     }
     
@@ -25,5 +28,21 @@ public class Player extends Actor{
         if(Greenfoot.isKeyDown("s")){
             move(-speed);
         }
+        
+        attackGauge++;
+        if(attackGauge >= atkSpd){
+            attack();
+            attackGauge = 0;
+        }
+
+    }
+    
+    private void attack(){
+        SpaceShooter world = (SpaceShooter) getWorld();
+        Bullet smallBullet = new Bullet();
+        for(int i = 0; i < bullets; i++){
+            world.addObject(smallBullet, getX(), getY() - 40);
+        }
+        
     }
 }
