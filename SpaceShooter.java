@@ -6,8 +6,6 @@ public class SpaceShooter extends World{
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
     
     Player player = new Player(1, 4, 1, 50, -90);
-    Meteor basic = new Meteor(0, 0, 1, 1);
-    
     
     public SpaceShooter(){    
         super(400, 800, 1);
@@ -29,8 +27,9 @@ public class SpaceShooter extends World{
     
     public void spawnBasic(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor(x, 0, 1, 1);
+        Meteor basic = new Meteor(x, 0, 1, 1, 1);
         addObject(basic, x, 0);
-    }  
+    }
+
 }
 

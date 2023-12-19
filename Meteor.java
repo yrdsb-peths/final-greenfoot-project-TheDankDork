@@ -3,12 +3,14 @@ import greenfoot.*;
 public class Meteor extends Actor{
     public int xPos;
     public int yPos;
+    public static int health = 1;
     public static int points = 1;
     public static int livesTaken = 1;
     
-    public Meteor(int xPos, int yPos, int points, int livesTaken){
+    public Meteor(int xPos, int yPos, int health, int points, int livesTaken){
         this.xPos = xPos;
         this.yPos = yPos;
+        this.health = health;
         this.points = points;
         this.livesTaken = livesTaken;
     }
