@@ -20,6 +20,9 @@ public class Bullet extends Actor{
         if(isAtEdge()){
             world.removeObject(this);
         }
+        if(isTouching(Meteor.class)){
+            world.removeObject(this);
+        }
     }
     
     private void hitTarget(){
@@ -29,7 +32,6 @@ public class Bullet extends Actor{
             Meteor.health--;
             if(Meteor.health <= 0){
                 removeTouching(Meteor.class);
-
                 world.spawnBasic(); 
             }
             

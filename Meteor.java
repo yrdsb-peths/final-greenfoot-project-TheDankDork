@@ -25,8 +25,8 @@ public class Meteor extends Actor{
         if(isTouchingGround()){
             world.modifyLives(-livesTaken);
             world.removeObject(this);
-            world.spawnBasic();
         }
+        
     }
     
     private boolean isTouchingGround(){
