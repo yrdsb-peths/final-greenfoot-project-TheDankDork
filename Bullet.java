@@ -19,8 +19,7 @@ public class Bullet extends Actor{
         
         if(isAtEdge()){
             world.removeObject(this);
-        }
-        if(isTouching(Meteor.class)){
+        } else if (isTouching(Meteor.class)){
             world.removeObject(this);
         }
     }
