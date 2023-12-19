@@ -31,7 +31,6 @@ public class Bullet extends Actor{
             Meteor.health--;
             if(Meteor.health <= 0){
                 removeTouching(Meteor.class);
-                world.spawnBasic(); 
             }
             
         }
