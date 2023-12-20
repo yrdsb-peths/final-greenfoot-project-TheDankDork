@@ -30,6 +30,7 @@ public class Bullet extends Actor{
         if(isTouching(Meteor.class)){
             Meteor.health--;
             if(Meteor.health <= 0){
+                world.score++;
                 removeTouching(Meteor.class);
             }
             

@@ -7,15 +7,35 @@ public class SpaceShooter extends World{
     
     public int basicGauge = 0;
     
-    Player player = new Player(1, 4, 1, 50, -90);
+    Player player = new Player(1, 4, 1, 100, -90);
+    
+    Text displayScore; 
+    Text displayLives;
     
     public SpaceShooter(){    
         super(400, 800, 1);
+        
+        displayScore = new Text("Score: ", score, 30);
+        displayLives = new Text("Lives: ", lives, 30);
+        
         spawnBasic();
     }
     
     public void act(){
+        // Display score and lives for user
+        addObject(displayScore, 70, 40);
+        addObject(displayLives, 330, 40);         
+        
+        // Constantly update the score and lives display
+        displayScore.setValue(score);
+        displayLives.setValue(lives);
+        
         addObject(player, 200, 700);
+        
+        if((score % 10) == 0){
+            speedMod = score/10;
+        }
+        
         basicGauge++;
         spawnRandom();
     }
@@ -38,7 +58,7 @@ public class SpaceShooter extends World{
     
     public void spawnBasic(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor(x, 0, 1, 1, 1);
+        Meteor basic = new Meteor(x, 0, 1, 1, 1, 1);
         addObject(basic, x, 0);
     }
 
