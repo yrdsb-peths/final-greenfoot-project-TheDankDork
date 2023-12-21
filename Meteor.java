@@ -24,11 +24,10 @@ public class Meteor extends Actor{
         yPos += (speed); // Allows the meteor to slowly fall down
         
         // Remove self and take away lives if touching ground
-        if(isTouchingGround()){
+        if(isTouchingGround() || isTouching(Player.class)){
             world.modifyLives(-livesTaken);
             world.removeObject(this);
-        }
-        
+        }        
     }
     
     private boolean isTouchingGround(){
