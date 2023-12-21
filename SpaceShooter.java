@@ -32,7 +32,7 @@ public class SpaceShooter extends World{
         
         addObject(player, 200, 700);
         
-        if((score % 10) == 0){
+        if(((score % 10) == 0) && (speedMod < 10)){
             speedMod = score/10;
         }
         
@@ -50,7 +50,7 @@ public class SpaceShooter extends World{
     }
     
     public void spawnRandom(){
-        if(basicGauge >= 200){
+        if(basicGauge >= (200 - speedMod * 10)){
             spawnBasic();
             basicGauge = 0;
         }
