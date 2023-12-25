@@ -58,9 +58,21 @@ public class SpaceShooter extends World{
     
     public void spawnBasic(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor(x, 0, 1, 1, 1, 1);
+        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, 0, 1, 1, 1, 1);
         addObject(basic, x, 0);
     }
+    
+    public void spawnStage1(){
+        int x = Greenfoot.getRandomNumber(400);
+        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, 0, 1, 1, 1, 1);
+        addObject(basic, x, 0);
+    }
+    
+    public void spawnStage2(){
+        int x = Greenfoot.getRandomNumber(400);
+        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, 0, 1, 1, 1, 1);
+        addObject(basic, x, 0);
+    }    
 
 }
 

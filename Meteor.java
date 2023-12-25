@@ -8,7 +8,8 @@ public class Meteor extends Actor{
     public static int points = 1;
     public static int livesTaken = 1;
     
-    public Meteor(int xPos, int yPos, int health, int speed, int points, int livesTaken){
+    public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, int speed, int points, int livesTaken){
+        setImage(image);
         this.xPos = xPos;
         this.yPos = yPos;
         this.health = health;
