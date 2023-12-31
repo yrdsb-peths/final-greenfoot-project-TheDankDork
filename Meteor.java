@@ -3,9 +3,16 @@ import greenfoot.*;
 public class Meteor extends Actor{
     public int xPos;
     public int yPos;
+<<<<<<< Updated upstream
     public static int health = 1;
     public static int points = 1;
     public static int livesTaken = 1;
+=======
+    public int health = 1;
+    public int speed = 1;
+    public int points = 1;
+    public int livesTaken = 1;
+>>>>>>> Stashed changes
     
     public Meteor(int xPos, int yPos, int health, int points, int livesTaken){
         this.xPos = xPos;
@@ -26,7 +33,11 @@ public class Meteor extends Actor{
             world.modifyLives(-livesTaken);
             world.removeObject(this);
         }
+<<<<<<< Updated upstream
         
+=======
+        checkHealth();
+>>>>>>> Stashed changes
     }
     
     private boolean isTouchingGround(){
@@ -34,5 +45,21 @@ public class Meteor extends Actor{
             return true;
         }
         return false;
+    }
+    
+    private void checkHealth(){
+        if(health <= 0){
+            SpaceShooter world = (SpaceShooter) getWorld();
+            world.score += points;
+            world.removeObject(this);
+        }
+    }
+    
+    public boolean isHit(){
+        return isTouching(Bullet.class);
+    }
+    
+    public void changeHealth(int amount){
+        health += amount;
     }
 }

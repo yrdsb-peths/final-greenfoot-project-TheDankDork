@@ -15,8 +15,6 @@ public class Bullet extends Actor{
         SpaceShooter world = (SpaceShooter) getWorld();
         setLocation(getX(), getY() - speed);
         
-        hitTarget();
-        
         if(isAtEdge()){
             world.removeObject(this);
         } else if (isTouching(Meteor.class)){
@@ -24,6 +22,7 @@ public class Bullet extends Actor{
         }
     }
     
+<<<<<<< Updated upstream
     private void hitTarget(){
         SpaceShooter world = (SpaceShooter) getWorld();
 
@@ -36,5 +35,9 @@ public class Bullet extends Actor{
             
         }
 
+=======
+    public boolean isHit(){
+        return isTouching(Meteor.class);
+>>>>>>> Stashed changes
     }
 }
