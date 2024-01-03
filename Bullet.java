@@ -1,43 +1,32 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Bullet extends Actor{
-    public static int damage = 1;
-    public static int size = 1;
-    public static int speed = 1;
-    boolean deleteSelf = false;
+    public int damage = 1;
+    public int size = 1;
+    public int speed = 1;
+    private int health = 1;
     
-    public Bullet(int damage, int size, int speed){
+    public Bullet(int damage, int size, int speed, int health){
         this.damage = damage;
         this.size = size;
         this.speed = speed;
+        this.health = health;
     }
     
     public void act(){
         SpaceShooter world = (SpaceShooter) getWorld();
-        setLocation(getX(), getY() - speed);
-        
-        hitTarget();
-        
-        if(isAtEdge()){
+        if(health <= 0){
             world.removeObject(this);
-        } 
-        else if(deleteSelf){
-            world.removeObject(this);
-            deleteSelf = false;
         }
-    }
-    
-    private void hitTarget(){
-        SpaceShooter world = (SpaceShooter) getWorld();
-
-        if(isTouching(Meteor.class)){
-            Meteor.health--;
-            deleteSelf = true;
-            if(Meteor.health <= 0){
-                world.score++;
-                removeTouching(Meteor.class);
-            }
-            
+        else{
+            setLocation(getX(), getY() - speed);
+        
+            if(isTouching(Meteor.class)){
+                health--;            
+            }            
+            if(isAtEdge()){
+                health = 0;
+            }        
         }
 
     }

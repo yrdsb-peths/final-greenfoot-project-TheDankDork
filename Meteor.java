@@ -3,10 +3,10 @@ import greenfoot.*;
 public class Meteor extends Actor{
     public int xPos;
     public int yPos;
-    public static int health = 1;
-    public static int speed = 1;
-    public static int points = 1;
-    public static int livesTaken = 1;
+    public int health = 1;
+    public int speed = 1;
+    public int points = 1;
+    public int livesTaken = 1;
     
     public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, int speed, int points, int livesTaken){
         setImage(image);
@@ -19,16 +19,28 @@ public class Meteor extends Actor{
     }
     
     public void act(){
-        setLocation(xPos, yPos); // Set location of the meteor
-        
         SpaceShooter world = (SpaceShooter) getWorld();
-        yPos += (speed); // Allows the meteor to slowly fall down
         
-        // Remove self and take away lives if touching ground
-        if(isTouchingGround() || isTouching(Player.class)){
-            world.modifyLives(-livesTaken);
+        if(health == 0){
             world.removeObject(this);
-        }        
+        }
+        else{
+            yPos += (speed); // Allows the meteor to slowly fall down
+            setLocation(xPos, yPos); // Set location of the meteor
+ 
+            // Remove self and take away lives if touching ground
+            if(isTouchingGround() || isTouching(Player.class)){
+                world.modifyLives(-livesTaken);
+                health = 0;
+            }
+            if(isTouching(Bullet.class)){
+                health--;
+                if(health == 0){
+                    world.score += points;
+                }
+            }            
+        }
+
     }
     
     private boolean isTouchingGround(){
