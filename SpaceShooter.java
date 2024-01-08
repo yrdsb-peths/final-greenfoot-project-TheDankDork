@@ -6,8 +6,10 @@ public class SpaceShooter extends World{
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
     
     public int basicGauge = 0;
-    public int Stage1Gauge = -300;
-    public int Stage2Gauge = -1000;
+    public int Stage1Gauge = -500;
+    public int Stage2Gauge = -2000;
+    
+    public int wave = 0;
     
     Player player = new Player(1, 4, 1, 100, -90);
     
@@ -33,7 +35,7 @@ public class SpaceShooter extends World{
         displayLives.setValue(lives);
         
         addObject(player, 200, 700);
-        
+                
         if(((score % 10) == 0) && (speedMod < 10)){
             speedMod = score/10;
         }
@@ -47,7 +49,7 @@ public class SpaceShooter extends World{
     }
     
     // Modify lives based on meteor that was leaked
-    public void modifyLives(int  amount){
+    public void modifyLives(int amount){
         lives += amount;    
     }
     
@@ -70,6 +72,10 @@ public class SpaceShooter extends World{
             spawnStage2();
             Stage2Gauge = 0;
         }
+        if(score >= 30 && wave == 0){
+            spawnMiniBoss();
+            wave++;
+        }
     }
     
     public void spawnBasic(){
@@ -80,15 +86,19 @@ public class SpaceShooter extends World{
     
     public void spawnStage1(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor("stage_1.png", 50, 0, x, 0, 2, 2, 2, 2);
-        addObject(basic, x, 0);
+        Meteor stage1 = new Meteor("stage_1.png", 50, 0, x, 0, 2, 2, 2, 2);
+        addObject(stage1, x, 0);
     }
     
     public void spawnStage2(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor("stage_2.png", 50, 0, x, 0, 2, 4, 4, 4);
-        addObject(basic, x, 0);
+        Meteor stage2 = new Meteor("stage_2.png", 50, 0, x, 0, 2, 4, 4, 4);
+        addObject(stage2, x, 0);
     }    
 
+    public void spawnMiniBoss(){
+        Meteor miniBoss = new Meteor("mini_boss.jpg",    50, 0, 200, 0, 30, 0.1, 30, 30);
+        addObject(miniBoss, 200, 0);
+    }
 }
 

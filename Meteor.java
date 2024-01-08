@@ -1,14 +1,14 @@
 import greenfoot.*;  
 
-public class Meteor extends Actor{
-    public int xPos;
-    public int yPos;
+public class Meteor extends SmoothMover{
+    public double xPos;
+    public double yPos;
     public int health = 1;
-    public int speed = 1;
+    public double speed = 1;
     public int points = 1;
     public int livesTaken = 1;
     
-    public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, int speed, int points, int livesTaken){
+    public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, double speed, int points, int livesTaken){
         setImage(image);
         this.xPos = xPos;
         this.yPos = yPos;

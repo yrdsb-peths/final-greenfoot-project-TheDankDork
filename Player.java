@@ -39,7 +39,7 @@ public class Player extends Actor{
     
     private void attack(){
         SpaceShooter world = (SpaceShooter) getWorld();
-        Bullet smallBullet = new Bullet(1, 1, 3, 1);
+        Type1 smallBullet = new Type1(1, 1, 3, 1);
         for(int i = 0; i < bullets; i++){
             world.addObject(smallBullet, getX(), getY() - 40);
         }
