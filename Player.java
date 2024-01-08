@@ -16,16 +16,16 @@ public class Player extends Actor{
     }
     
     public void act(){
-        if(Greenfoot.isKeyDown("a")){
+        if(Greenfoot.isKeyDown("a") && getX() > 0){
             setLocation(getX() - speed, getY());
         }
-        if(Greenfoot.isKeyDown("d")){
+        if(Greenfoot.isKeyDown("d") && getX() < 400){
             setLocation(getX() + speed, getY());
         }
-        if(Greenfoot.isKeyDown("w")){
+        if(Greenfoot.isKeyDown("w") && getY() > 0){
             move(speed);
         }
-        if(Greenfoot.isKeyDown("s")){
+        if(Greenfoot.isKeyDown("s") && getY() < 800){
             move(-speed);
         }
         

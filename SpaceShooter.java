@@ -13,14 +13,20 @@ public class SpaceShooter extends World{
     
     Player player = new Player(1, 4, 1, 100, -90);
     
+    Background bg1 = new Background();
+    Background bg2 = new Background();
+    
     Text displayScore; 
     Text displayLives;
     
     public SpaceShooter(){    
-        super(400, 800, 1);
+        super(400, 800, 1, false);
         
         displayScore = new Text("Score: ", score, 30);
         displayLives = new Text("Lives: ", lives, 30);
+        
+        addObject(bg1, 200, -390);
+        addObject(bg2, 200, 400);
         
         spawnBasic();
     }
@@ -72,7 +78,7 @@ public class SpaceShooter extends World{
             spawnStage2();
             Stage2Gauge = 0;
         }
-        if(score >= 30 && wave == 0){
+        if(score >= 5 && wave == 0){
             spawnMiniBoss();
             wave++;
         }
@@ -80,24 +86,24 @@ public class SpaceShooter extends World{
     
     public void spawnBasic(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, 0, 1, 1, 1, 1);
+        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, -50, 1, 1, 1, 1);
         addObject(basic, x, 0);
     }
     
     public void spawnStage1(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor stage1 = new Meteor("stage_1.png", 50, 0, x, 0, 2, 2, 2, 2);
+        Meteor stage1 = new Meteor("stage_1.png", 50, 0, x, -50, 2, 2, 2, 2);
         addObject(stage1, x, 0);
     }
     
     public void spawnStage2(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor stage2 = new Meteor("stage_2.png", 50, 0, x, 0, 2, 4, 4, 4);
+        Meteor stage2 = new Meteor("stage_2.png", 50, 0, x, -50, 2, 4, 4, 4);
         addObject(stage2, x, 0);
     }    
 
     public void spawnMiniBoss(){
-        Meteor miniBoss = new Meteor("mini_boss.jpg",    50, 0, 200, 0, 30, 0.1, 30, 30);
+        Meteor miniBoss = new Meteor("mini_boss.png", 50, 0, 200, 0, 30, 0.1, 30, 30);
         addObject(miniBoss, 200, 0);
     }
 }
