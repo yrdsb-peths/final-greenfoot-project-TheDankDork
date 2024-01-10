@@ -60,7 +60,7 @@ public class Meteor extends SmoothMover{
     int frame = 0;
     public void explode(int scaleX, int scaleY){ 
 
-        if(explosionTimer.millisElapsed() > 40){
+        if(explosionTimer.millisElapsed() > 10){
             frame += 1;
             explosionTimer.mark();
             if(frame == images.length){
