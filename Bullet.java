@@ -1,43 +1,32 @@
 import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
 
 public class Bullet extends Actor{
-    public static int damage = 1;
-    public static int size = 1;
-    public static int speed = 1;
+    public int damage = 1;
+    public int size = 1;
+    public int speed = 1;
+    public int health = 1;
     
-    public Bullet(int damage, int size, int speed){
+    public Bullet(int damage, int size, int speed, int health){
         this.damage = damage;
         this.size = size;
         this.speed = speed;
+        this.health = health;
     }
     
-    public void act(){
+    public void movement(){
         SpaceShooter world = (SpaceShooter) getWorld();
-        setLocation(getX(), getY() - speed);
+        if(health <= 0){
+            world.removeObject(this);
+        }
+        else{
+            setLocation(getX(), getY() - speed);
         
-        if(isAtEdge()){
-            world.removeObject(this);
-        } else if (isTouching(Meteor.class)){
-            world.removeObject(this);
+            if(isTouching(Basic.class) || isTouching(Stage1.class) || isTouching(Stage2.class) || isTouching(MiniBoss.class)){
+                health--;            
+            }            
+            if(isAtEdge()){
+                health = 0;
+            }        
         }
-    }
-    
-<<<<<<< Updated upstream
-    private void hitTarget(){
-        SpaceShooter world = (SpaceShooter) getWorld();
-
-        if(isTouching(Meteor.class)){
-            Meteor.health--;
-            if(Meteor.health <= 0){
-                removeTouching(Meteor.class);
-                world.spawnBasic(); 
-            }
-            
-        }
-
-=======
-    public boolean isHit(){
-        return isTouching(Meteor.class);
->>>>>>> Stashed changes
     }
 }
