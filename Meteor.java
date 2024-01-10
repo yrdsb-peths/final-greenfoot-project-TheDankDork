@@ -7,6 +7,7 @@ public class Meteor extends SmoothMover{
     public double speed = 1;
     public int points = 1;
     public int livesTaken = 1;
+    GreenfootImage[] images = new GreenfootImage[25];   
     
     public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, double speed, int points, int livesTaken){
         setImage(image);
@@ -16,6 +17,9 @@ public class Meteor extends SmoothMover{
         this.speed = speed;
         this.points = points;
         this.livesTaken = livesTaken;
+        for(int i = 0; i < 25; i++) {
+            images[i] = new GreenfootImage("images/explosions/explosion" + i +".png");
+        } 
     }
     
     public void act(){
@@ -51,21 +55,17 @@ public class Meteor extends SmoothMover{
     }
     
     public void explode(int scaleX, int scaleY){ 
-        int time = 0;
         int frame = 0;
         
-        GreenfootImage[] Images = new GreenfootImage[25];
-        for(int i = 0; i < 25; i++) {
-            Images[i] = new GreenfootImage("images/explosions/explosion" + i +".png");
-        }
+        SimpleTimer timer = new SimpleTimer();
+        timer.mark();
         
-        while(frame < 24){
-            time++;
-            
-            if((time % 10) == 0){
+        while(frame < 24){           
+            if(timer.millisElapsed() > 40){
                 frame++;
+                timer.mark();
+                setImage(images[frame]);
             }
-            setImage(Images[frame]);
         }
     }
 }
