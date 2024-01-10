@@ -10,6 +10,7 @@ public class Stage2 extends Meteor{
         SpaceShooter world = (SpaceShooter) getWorld();
         
         if(health == 0){
+            explode(50, 50);
             world.removeObject(this);
         }
         else{

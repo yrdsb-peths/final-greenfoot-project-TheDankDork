@@ -10,6 +10,7 @@ public class Basic extends Meteor
         SpaceShooter world = (SpaceShooter) getWorld();
         
         if(health == 0){
+            explode(50, 50);
             world.removeObject(this);
         }
         else{
@@ -24,7 +25,7 @@ public class Basic extends Meteor
             if(isTouching(Bullet.class)){
                 health--;
                 if(health == 0){
-                    explode(50, 50);
+                    world.score += points;
                 }
             }            
         }

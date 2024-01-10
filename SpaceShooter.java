@@ -86,24 +86,21 @@ public class SpaceShooter extends World{
     
     public void spawnBasic(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor basic = new Meteor("basic_meteor.png", 50, 0, x, -50, 1, 1, 1, 1);
+        Basic basic = new Basic("basic_meteor.png", 50, 0, x, -50, 1, 1, 1, 1);
         addObject(basic, x, 0);
-    }
-    
+    }    
     public void spawnStage1(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor stage1 = new Meteor("stage_1.png", 50, 0, x, -50, 2, 2, 2, 2);
+        Stage1 stage1 = new Stage1("stage_1.png", 50, 0, x, -50, 2, 2, 2, 2);
         addObject(stage1, x, 0);
-    }
-    
+    }    
     public void spawnStage2(){
         int x = Greenfoot.getRandomNumber(400);
-        Meteor stage2 = new Meteor("stage_2.png", 50, 0, x, -50, 2, 4, 4, 4);
+        Stage2 stage2 = new Stage2("stage_2.png", 50, 0, x, -50, 2, 4, 4, 4);
         addObject(stage2, x, 0);
     }    
-
     public void spawnMiniBoss(){
-        Meteor miniBoss = new Meteor("mini_boss.png", 50, 0, 200, 0, 30, 0.1, 30, 30);
+        MiniBoss miniBoss = new MiniBoss("mini_boss.png", 50, 0, 200, 0, 30, 0.1, 30, 30);
         addObject(miniBoss, 200, 0);
     }
 }
