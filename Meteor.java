@@ -34,9 +34,9 @@ public class Meteor extends SmoothMover{
         // Remove self and take away lives if touching ground
         if(isTouchingGround() || isTouching(Player.class)){
             world.modifyLives(-livesTaken);
-            health = 0;
+            world.removeObject(this);
         }
-        if(isTouching(Bullet.class)){
+        else if(isTouching(Bullet.class)){
             health--;
             if(health == 0){
                 explosionTimer.mark();
@@ -65,7 +65,8 @@ public class Meteor extends SmoothMover{
             explosionTimer.mark();
             if(frame == images.length){
                 getWorld().removeObject(this);
-            } else {
+            } 
+            else{
                 setImage(images[frame]);
             }
         }
