@@ -39,20 +39,31 @@ public class SpaceShooter extends World{
     }
     
     public void act(){
-        
-        initGame();
+        checkStartPressed();
     }
     
-    public void initGame(){      
-        // Display score and lives for user
-        addObject(displayScore, 70, 40);
-        addObject(displayLives, 330, 40);         
-        
+    public void checkStartPressed(){        
+        if(Greenfoot.mouseClicked(startButton)){
+            removeObject(startButton);
+            removeObject(ruleButton);
+            removeObject(title); 
+            
+            addObject(player, 200, 700);
+            addObject(displayScore, 70, 40);
+            addObject(displayLives, 330, 40);
+            
+            score = 0;
+            lives = 3;
+            speedMod = 0;
+            
+            initGame();
+        }
+    } 
+    
+    public void initGame(){       
         // Constantly update the score and lives display
         displayScore.setValue(score);
         displayLives.setValue(lives);
-        
-        addObject(player, 200, 700);
                 
         if(((score % 10) == 0) && (speedMod < 10)){
             speedMod = score/10;
