@@ -19,6 +19,11 @@ public class SpaceShooter extends World{
     Text displayScore; 
     Text displayLives;
     
+    Button title = new Button("title.png", 600, 450);
+    Button startButton = new Button("start_button.png", 180, 160);
+    Button ruleButton = new Button("rule_button.png", 184, 164);
+    Button backButton = new Button("back_button.png", 30, 65);
+    
     public SpaceShooter(){    
         super(400, 800, 1, false);
         
@@ -28,10 +33,17 @@ public class SpaceShooter extends World{
         addObject(bg1, 200, -390);
         addObject(bg2, 200, 400);
         
-        spawnBasic();
+        addObject(title, 200, 250);
+        addObject(startButton, 110, 550);
+        addObject(ruleButton, 300, 550);
     }
     
     public void act(){
+        
+        initGame();
+    }
+    
+    public void initGame(){      
         // Display score and lives for user
         addObject(displayScore, 70, 40);
         addObject(displayLives, 330, 40);         
