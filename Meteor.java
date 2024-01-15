@@ -1,6 +1,10 @@
 import greenfoot.*;  
 
 public class Meteor extends SmoothMover{
+    public int powerup = 0;
+    public int type = 0;
+    public String image;
+    
     public double xPos;
     public double yPos;
     public int health = 1;
@@ -12,8 +16,11 @@ public class Meteor extends SmoothMover{
     GreenfootImage[] images = new GreenfootImage[25];
     SimpleTimer explosionTimer = new SimpleTimer();
 
-    public Meteor(String image, int scale, int rotation, int xPos, int yPos, int health, double speed, int points, int livesTaken){
-        setImage(image);
+    public Meteor(String image, int powerup, int rotation, int xPos, int yPos, int health, double speed, int points, int livesTaken){
+        this.image = image;
+        this.powerup = powerup;
+        givePowerup();
+        
         this.xPos = xPos;
         this.yPos = yPos;
         this.health = health;
@@ -39,13 +46,15 @@ public class Meteor extends SmoothMover{
         else if(isTouching(Bullet.class)){
             health--;
             if(health == 0){
+                applyPowerup();
+                world.score += points;
+                
                 explosionTimer.mark();
                 isExploding = true;
-                world.score += points;
             }
         }            
 
-        if(isExploding) {
+        if(isExploding){
             explode(50, 50);
         }
     }
@@ -59,7 +68,6 @@ public class Meteor extends SmoothMover{
 
     int frame = 0;
     public void explode(int scaleX, int scaleY){ 
-
         if(explosionTimer.millisElapsed() > 10){
             frame += 1;
             explosionTimer.mark();
@@ -70,6 +78,55 @@ public class Meteor extends SmoothMover{
                 setImage(images[frame]);
             }
         }
-
+    }
+    
+    public void givePowerup(){
+        if(powerup < 75){
+            setImage(image + ".png");
+            type = 0;
+        }
+        else if(powerup < 83){
+            setImage(image + "HP" + ".png");
+            type = 1;
+        }
+        else if(powerup < 91){
+            setImage(image + "DMG" + ".png");
+            type = 2;
+        }
+        else if(powerup < 99){
+            setImage(image + "SPD" + ".png");
+            type = 3;
+        }
+        else{
+            setImage(image + "ALL" + ".png");
+            type = 4;
+        }
+    }
+    
+    public void applyPowerup(){
+        SpaceShooter world = (SpaceShooter) getWorld();
+        switch(type){
+            case 1: 
+                world.modifyLives(5);
+                break;
+                
+            case 2: 
+                Player.damage++;
+                break;
+                
+            case 3:
+                if(Player.atkSpd > 45){
+                    Player.atkSpd -= 5;
+                }
+                break;
+                
+            case 4:
+                world.modifyLives(5);
+                Player.damage++;
+                if(Player.atkSpd > 45){
+                    Player.atkSpd -= 5;
+                }
+                break;                
+        }
     }
 }

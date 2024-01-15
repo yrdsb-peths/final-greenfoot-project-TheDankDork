@@ -13,7 +13,7 @@ public class Bullet extends Actor{
         this.health = health;
     }
     
-    public void movement(){
+    public void act(){
         SpaceShooter world = (SpaceShooter) getWorld();
         if(health <= 0){
             world.removeObject(this);
