@@ -10,13 +10,13 @@ public class Meteor extends SmoothMover{
     public int health = 1;
     public double speed = 1;
     public int points = 1;
-    public int livesTaken = 1;
+    public int damage = 1;
     public boolean isExploding = false;
 
     GreenfootImage[] images = new GreenfootImage[25];
     SimpleTimer explosionTimer = new SimpleTimer();
 
-    public Meteor(String image, int powerup, int rotation, int xPos, int yPos, int health, double speed, int points, int livesTaken){
+    public Meteor(String image, int powerup, int rotation, int xPos, int yPos, int health, double speed, int points, int damage){
         this.image = image;
         this.powerup = powerup;
         givePowerup();
@@ -26,7 +26,7 @@ public class Meteor extends SmoothMover{
         this.health = health;
         this.speed = speed;
         this.points = points;
-        this.livesTaken = livesTaken;
+        this.damage = damage;
         for(int i = 0; i < 25; i++) {
             images[i] = new GreenfootImage("images/explosions/explosion" + i +".png");
         } 
@@ -39,10 +39,25 @@ public class Meteor extends SmoothMover{
         setLocation(xPos, yPos); // Set location of the meteor
 
         // Remove self and take away lives if touching ground
-        if(isTouchingGround() || isTouching(Player.class)){
-            world.modifyLives(-livesTaken);
+        if(isTouching(Player.class)){
+            if(world.shield > damage){
+                world.modifyShield(-damage);
+            }
+            else if((world.shield > 0) && (world.shield <= damage)){
+                world.shield = 0;
+            }
+            else{
+                world.lives--;
+            }
+            world.removeObject(this); 
+            
+        }
+        
+        else if(isTouchingGround()){
+            world.lives--;
             world.removeObject(this);
         }
+        
         else if(isTouching(Bullet.class)){
             health--;
             if(health == 0){
@@ -106,8 +121,13 @@ public class Meteor extends SmoothMover{
     public void applyPowerup(){
         SpaceShooter world = (SpaceShooter) getWorld();
         switch(type){
-            case 1: 
-                world.modifyLives(5);
+            case 1:
+                if(world.shield < 6){
+                    world.modifyShield(5);
+                }
+                else{
+                    world.shield = 10;
+                }
                 break;
                 
             case 2: 
@@ -121,7 +141,7 @@ public class Meteor extends SmoothMover{
                 break;
                 
             case 4:
-                world.modifyLives(5);
+                world.modifyShield(5);
                 Player.damage++;
                 if(Player.atkSpd > 45){
                     Player.atkSpd -= 5;

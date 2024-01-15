@@ -13,7 +13,6 @@ public class Button extends Actor{
     public Button(String theImage, int scaleX, int scaleY){
         GreenfootImage image = new GreenfootImage(theImage);
         image.scale(scaleX, scaleY);
-        setImage(image);
-                
+        setImage(image);               
     }
 }

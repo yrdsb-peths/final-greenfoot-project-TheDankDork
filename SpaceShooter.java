@@ -2,8 +2,9 @@ import greenfoot.*;
 
 public class SpaceShooter extends World{
     public int score = 0;
-    public int lives = 10;
-    public int level = 0;
+    public int shield = 5;
+    public int lives = 3;
+    
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
     
     public int basicGauge = 0;
@@ -25,6 +26,12 @@ public class SpaceShooter extends World{
     Button title = new Button("title.png", 600, 450);
     Button rules = new Button("rules.png", 400, 800);
     Button frame = new Button("frame.png", 400, 200);
+    
+    HP hpBar = new HP();
+    Button shieldIcon = new Button("shield.png", 35, 40);
+    Shield shieldBar = new Shield();
+    
+    Button gameover = new Button("gameover.png", 400, 400);
     
     Button startButton = new Button("start_button.png", 180, 160);
     Button ruleButton = new Button("rule_button.png", 184, 164);
@@ -51,15 +58,7 @@ public class SpaceShooter extends World{
         checkBackPressed();
         
         if(gameActive){
-            increaseGauge();
-            spawnMeteor();
-            
-            // Constantly update the score and lives display
-            displayScore.setValue(score);
-                    
-            if(((score % 10) == 0) && (speedMod < 10)){
-                speedMod = score/10;
-            }
+            gameLoop();
         }
     }
     
@@ -72,6 +71,9 @@ public class SpaceShooter extends World{
             addObject(player, 200, 700);
             addObject(displayScore, 100, 690);
             addObject(displayLevel, 70, 730);
+            addObject(hpBar, 300, 690);
+            addObject(shieldIcon, 250, 730);
+            addObject(shieldBar, 240, 730);
             
             initGame();
         }
@@ -102,8 +104,8 @@ public class SpaceShooter extends World{
     
     public void initGame(){               
         score = 0;
-        lives = 10;
-        level = 0;
+        shield = 5;
+        lives = 3;
         speedMod = 0;
         
         basicGauge = 0;
@@ -113,13 +115,35 @@ public class SpaceShooter extends World{
         gameActive = true;
     }
     
+    public void gameLoop(){
+        if(lives < 1){
+            gameOver();
+        }
+        else{
+            increaseGauge();
+            spawnMeteor();
+            
+            // Constantly update the score and shield display
+            displayScore.setValue(score);
+                    
+            if(((score % 10) == 0) && (speedMod < 10)){
+                speedMod = score/10;
+            }
+        }
+
+    }
+    
+    public void gameOver(){
+        addObject(gameover, 200, 200);
+    }
+    
     public void modifyScore(int points){    
         score += points;
     }
     
-    // Modify lives based on meteor that was leaked
-    public void modifyLives(int amount){
-        lives += amount;    
+    // Modify shield based on meteor that was leaked
+    public void modifyShield(int amount){
+        shield += amount;    
     }
     
     private void increaseGauge(){
