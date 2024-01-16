@@ -58,11 +58,16 @@ public class Meteor extends SmoothMover{
             world.removeObject(this);
         }
         
+        else if(!world.gameActive){
+            world.removeObject(this);
+        }
+        
         else if(isTouching(Bullet.class)){
             health--;
             if(health == 0){
                 applyPowerup();
                 world.score += points;
+                XP.currentXP += points;
                 
                 explosionTimer.mark();
                 isExploding = true;
@@ -141,7 +146,12 @@ public class Meteor extends SmoothMover{
                 break;
                 
             case 4:
-                world.modifyShield(5);
+                if(world.shield < 6){
+                    world.modifyShield(5);
+                }
+                else{
+                    world.shield = 10;
+                }
                 Player.damage++;
                 if(Player.atkSpd > 45){
                     Player.atkSpd -= 5;

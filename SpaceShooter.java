@@ -15,6 +15,10 @@ public class SpaceShooter extends World{
     
     public int wave = 0;
     
+    public int hs1 = 0;
+    public int hs2 = 0;
+    public int hs3 = 0;
+    
     Player player = new Player(1, 4, 1, 100, -90);
     
     Background bg1 = new Background();
@@ -28,10 +32,13 @@ public class SpaceShooter extends World{
     Button frame = new Button("frame.png", 400, 200);
     
     HP hpBar = new HP();
+    XP xpBar = new XP();
     Button shieldIcon = new Button("shield.png", 35, 40);
     Shield shieldBar = new Shield();
     
     Button gameover = new Button("gameover.png", 400, 400);
+    Button homeButton = new Button("home_button.png", 180, 180);
+    Button restartButton = new Button("playagain_button.png", 180, 180);
     
     Button startButton = new Button("start_button.png", 180, 160);
     Button ruleButton = new Button("rule_button.png", 184, 164);
@@ -41,7 +48,7 @@ public class SpaceShooter extends World{
         super(400, 800, 1, false);
         
         displayScore = new Text("Score: ", score, 30);
-        displayLevel = new Text("XP", 30);
+        displayLevel = new Text("Lvl ", XP.level, 24);
         
         addObject(bg1, 200, -390);
         addObject(bg2, 200, 400);
@@ -56,6 +63,8 @@ public class SpaceShooter extends World{
         checkStartPressed();
         checkRulesPressed();
         checkBackPressed();
+        checkHomePressed();
+        checkRestartPressed();
         
         if(gameActive){
             gameLoop();
@@ -70,8 +79,9 @@ public class SpaceShooter extends World{
             
             addObject(player, 200, 700);
             addObject(displayScore, 100, 690);
-            addObject(displayLevel, 70, 730);
+            addObject(displayLevel, 76, 730);
             addObject(hpBar, 300, 690);
+            addObject(xpBar, 90, 690);
             addObject(shieldIcon, 250, 730);
             addObject(shieldBar, 240, 730);
             
@@ -95,11 +105,50 @@ public class SpaceShooter extends World{
             removeObject(rules);
             removeObject(backButton);
             
-            addObject(frame, 200, 700);
             addObject(title, 200, 250);
             addObject(startButton, 110, 550);
             addObject(ruleButton, 300, 550);
         }
+    }
+    
+    public void checkHomePressed(){
+        if(Greenfoot.mouseClicked(homeButton)){
+            removeObject(gameover);
+            removeObject(homeButton);
+            removeObject(restartButton);
+            removeObject(displayScore);
+            removeObject(displayLevel);
+            removeObject(hpBar);
+            removeObject(shieldIcon);
+            removeObject(shieldBar);
+            
+            addObject(title, 200, 250);
+            addObject(startButton, 110, 550);
+            addObject(ruleButton, 300, 550);
+        } 
+    }
+    
+    public void checkRestartPressed(){
+        if(Greenfoot.mouseClicked(restartButton)){
+            removeObject(gameover);
+            removeObject(homeButton);
+            removeObject(restartButton);
+            
+            score = 0;
+            shield = 5;
+            lives = 3;
+            speedMod = 0;
+            
+            XP.currentXP = 0;
+            XP.levelXP = 2;
+            XP.currentXP = 0;
+            
+            addObject(player, 200, 700);
+            addObject(hpBar, 300, 690);
+            
+            gameActive = true;    
+        }
+        
     }
     
     public void initGame(){               
@@ -112,12 +161,17 @@ public class SpaceShooter extends World{
         Stage1Gauge = -500;
         Stage2Gauge = -2000;
         
+        XP.currentXP = 0;
+        XP.levelXP = 2;
+        XP.level = 0;
+        
         gameActive = true;
     }
     
     public void gameLoop(){
         if(lives < 1){
             gameOver();
+            removeObject(player);
         }
         else{
             increaseGauge();
@@ -125,6 +179,7 @@ public class SpaceShooter extends World{
             
             // Constantly update the score and shield display
             displayScore.setValue(score);
+            displayLevel.setValue(XP.level);
                     
             if(((score % 10) == 0) && (speedMod < 10)){
                 speedMod = score/10;
@@ -135,6 +190,15 @@ public class SpaceShooter extends World{
     
     public void gameOver(){
         addObject(gameover, 200, 200);
+        addObject(homeButton, 100, 440);
+        addObject(restartButton, 300, 440);
+        
+        basicGauge = 0;
+        Stage1Gauge = -500;
+        Stage2Gauge = -2000;
+        wave = 0;
+        
+        gameActive = false;
     }
     
     public void modifyScore(int points){    
