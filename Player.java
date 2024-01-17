@@ -45,13 +45,13 @@ public class Player extends Actor{
             }
         }
         else if(type == 1){
-            if(attackGauge >= atkSpd){
+            if(attackGauge >= (atkSpd - 10)){
                 attack1();
                 attackGauge = 0;
             }
         }
         else if(type == 2){
-            if(attackGauge >= atkSpd){
+            if(attackGauge >= (atkSpd - 20)){
                 attack2();
                 attackGauge = 0;
             }
@@ -63,7 +63,7 @@ public class Player extends Actor{
             }
         }
         else if(type == 4){
-            if(attackGauge >= (atkSpd - 20)){
+            if(attackGauge >= (atkSpd - 30)){
                 attack4();
                 attackGauge = 0;
             }
@@ -108,11 +108,11 @@ public class Player extends Actor{
     }
     
     private void setType(){
-        if(XP.level < 5){
+        if(XP.level < 4){
             type = 0;
             setImage("player0.png");
         }
-        else if(XP.level < 9){
+        else if(XP.level < 8){
             type = 1;
             setImage("player1.png");
         }
@@ -120,7 +120,7 @@ public class Player extends Actor{
             type = 2;
             setImage("player2.png");
         }
-        else if(XP.level < 14){
+        else if(XP.level < 15){
             type = 3;
             setImage("player3.png");
         }

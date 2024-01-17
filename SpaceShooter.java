@@ -15,9 +15,7 @@ public class SpaceShooter extends World{
     
     public int wave = 0;
     
-    public int hs1 = 0;
-    public int hs2 = 0;
-    public int hs3 = 0;
+    public static int highscore;
     
     Player player = new Player(1, 4, 1, 100);
     
@@ -26,10 +24,12 @@ public class SpaceShooter extends World{
     
     Text displayScore; 
     Text displayLevel;
+    Text highScore;
     
     Button title = new Button("title.png", 600, 450);
     Button rules = new Button("rules.png", 400, 800);
     Button frame = new Button("frame.png", 400, 200);
+    Button playerImage = new Button("player0.png", 100, 100);
     
     HP hpBar = new HP();
     XP xpBar = new XP();
@@ -49,14 +49,17 @@ public class SpaceShooter extends World{
         
         displayScore = new Text("Score: ", score, 30);
         displayLevel = new Text("Lvl ", XP.level, 24);
+        highScore = new Text("Highscore: ", highscore, 40);
         
         addObject(bg1, 200, -390);
         addObject(bg2, 200, 400);
         
         addObject(frame, 200, 700);
         addObject(title, 200, 250);
-        addObject(startButton, 110, 550);
-        addObject(ruleButton, 300, 550);
+        addObject(startButton, 110, 450);
+        addObject(ruleButton, 300, 450);
+        addObject(highScore, 185, 600);
+        addObject(playerImage, 200, 700);
     }
     
     public void act(){
@@ -76,6 +79,8 @@ public class SpaceShooter extends World{
             removeObject(startButton);
             removeObject(ruleButton);
             removeObject(title); 
+            removeObject(playerImage);
+            removeObject(highScore);
             
             addObject(player, 200, 700);
             addObject(displayScore, 100, 690);
@@ -94,6 +99,8 @@ public class SpaceShooter extends World{
             removeObject(startButton);
             removeObject(ruleButton);
             removeObject(title);
+            removeObject(playerImage);
+            removeObject(highScore);
             
             addObject(rules, 200, 400);
             addObject(backButton, 50, 17);
@@ -106,8 +113,10 @@ public class SpaceShooter extends World{
             removeObject(backButton);
             
             addObject(title, 200, 250);
-            addObject(startButton, 110, 550);
-            addObject(ruleButton, 300, 550);
+            addObject(startButton, 110, 450);
+            addObject(ruleButton, 300, 450);
+            addObject(highScore, 185, 600);
+            addObject(playerImage, 200, 700);
         }
     }
     
@@ -121,10 +130,13 @@ public class SpaceShooter extends World{
             removeObject(hpBar);
             removeObject(shieldIcon);
             removeObject(shieldBar);
+            removeObject(xpBar);
             
             addObject(title, 200, 250);
-            addObject(startButton, 110, 550);
-            addObject(ruleButton, 300, 550);
+            addObject(startButton, 110, 450);
+            addObject(ruleButton, 300, 450);
+            addObject(highScore, 185, 600);
+            addObject(playerImage, 200, 700);
         } 
     }
     
@@ -176,6 +188,10 @@ public class SpaceShooter extends World{
     
     public void gameLoop(){
         if(lives < 1){
+            if(score > highscore){
+                highscore = score;
+                highScore.setValue(highscore);
+            }
             gameOver();
             removeObject(player);
         }
@@ -227,15 +243,15 @@ public class SpaceShooter extends World{
             spawnBasic();
             basicGauge = 0;
         }
-        if(Stage1Gauge >= (500 - speedMod * 10)){
+        if(Stage1Gauge >= (500 - speedMod * 20)){
             spawnStage1();
             Stage1Gauge = 0;
         }
-        if(Stage2Gauge >= (1000 - speedMod * 10)){
+        if(Stage2Gauge >= (1000 - speedMod * 30)){
             spawnStage2();
             Stage2Gauge = 0;
         }
-        if(score >= 5 && wave == 0){
+        if(score >= 15 && wave == 0){
             spawnMiniBoss();
             wave++;
         }
