@@ -2,7 +2,7 @@ import greenfoot.*;
 
 public class XP extends Actor{
     public static int level = 0;
-    public static int levelXP = 2;
+    public static int levelXP = 3;
     public static int currentXP = 0;
     
     GreenfootImage[] xpBar = new GreenfootImage[10];        
@@ -18,7 +18,7 @@ public class XP extends Actor{
         
         if(levelXP <= currentXP){
             level++;
-            levelXP = levelXP * 2;
+            levelXP = (int) (levelXP * 1.5);
             currentXP = 0;
         }
         double percentEquiv = (double) currentXP / levelXP;

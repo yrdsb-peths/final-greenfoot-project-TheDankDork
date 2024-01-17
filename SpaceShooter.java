@@ -19,7 +19,7 @@ public class SpaceShooter extends World{
     public int hs2 = 0;
     public int hs3 = 0;
     
-    Player player = new Player(1, 4, 1, 100, -90);
+    Player player = new Player(1, 4, 1, 100);
     
     Background bg1 = new Background();
     Background bg2 = new Background();
@@ -141,7 +141,10 @@ public class SpaceShooter extends World{
             
             XP.currentXP = 0;
             XP.levelXP = 2;
-            XP.currentXP = 0;
+            XP.level = 0;
+            
+            Player.damage = 1;
+            Player.atkSpd = 100;
             
             addObject(player, 200, 700);
             addObject(hpBar, 300, 690);
@@ -164,6 +167,9 @@ public class SpaceShooter extends World{
         XP.currentXP = 0;
         XP.levelXP = 2;
         XP.level = 0;
+        
+        Player.damage = 1;
+        Player.atkSpd = 100;
         
         gameActive = true;
     }

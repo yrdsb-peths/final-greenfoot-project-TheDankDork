@@ -49,33 +49,53 @@ public class Meteor extends SmoothMover{
             else{
                 world.lives--;
             }
-            world.removeObject(this); 
             
+            world.removeObject(this); 
         }
         
         else if(isTouchingGround()){
             world.lives--;
             world.removeObject(this);
         }
+              
+        else if(isTouching(Type0.class) || 
+                isTouching(Type1.class) || 
+                isTouching(ClusterL.class) || 
+                isTouching(ClusterR.class) || 
+                isTouching(ClusterLF.class) || 
+                isTouching(ClusterLF.class)){
+                    
+            health -= Player.damage;
+            if(health <= 0){
+                explosionTimer.mark();
+                isExploding = true;
+            }
+        }   
+        
+        else if(isTouching(Type2.class)){
+            health -= (Player.damage + 1);
+            if(health <= 0){                    
+                explosionTimer.mark();
+                isExploding = true;
+            }
+        }
+        
+        else if(isTouching(Type3.class)){
+            health -= (Player.damage + 2);
+            setLocation(getX(), getY() - 20);
+            
+            if(health <= 0){
+                explosionTimer.mark();
+                isExploding = true;
+            }
+        }
         
         else if(!world.gameActive){
             world.removeObject(this);
         }
-        
-        else if(isTouching(Bullet.class)){
-            health--;
-            if(health == 0){
-                applyPowerup();
-                world.score += points;
-                XP.currentXP += points;
-                
-                explosionTimer.mark();
-                isExploding = true;
-            }
-        }            
 
         if(isExploding){
-            explode(50, 50);
+            explode();
         }
     }
 
@@ -87,11 +107,16 @@ public class Meteor extends SmoothMover{
     }
 
     int frame = 0;
-    public void explode(int scaleX, int scaleY){ 
+    public void explode(){
+        SpaceShooter world = (SpaceShooter) getWorld();
         if(explosionTimer.millisElapsed() > 10){
             frame += 1;
             explosionTimer.mark();
             if(frame == images.length){
+                world.score += points;
+                XP.currentXP += points;
+                applyPowerup();
+            
                 getWorld().removeObject(this);
             } 
             else{
