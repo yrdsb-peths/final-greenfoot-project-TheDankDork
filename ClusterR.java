@@ -13,7 +13,7 @@ public class ClusterR extends Bullet{
         else{
             setLocation(getX() + speed, getY());
         
-            if(isTouching(Basic.class) || isTouching(Stage1.class) || isTouching(Stage2.class) || isTouching(MiniBoss.class)){
+            if(isTouching(Mini.class) || isTouching(Basic.class) || isTouching(Stage1.class) || isTouching(Stage2.class) || isTouching(MiniBoss.class) || isTouching(FinalBoss.class)){
                 health--;            
             }            
             if(isAtEdge()){

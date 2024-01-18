@@ -15,8 +15,10 @@ public class Meteor extends SmoothMover{
 
     GreenfootImage[] images = new GreenfootImage[25];
     SimpleTimer explosionTimer = new SimpleTimer();
+    
+    GreenfootSound explosionSound = new GreenfootSound("sounds/explosion_audio.mp3");
 
-    public Meteor(String image, int powerup, int rotation, int xPos, int yPos, int health, double speed, int points, int damage){
+    public Meteor(String image, int powerup, int xPos, int yPos, int health, double speed, int points, int damage){
         this.image = image;
         this.powerup = powerup;
         givePowerup();
@@ -67,6 +69,7 @@ public class Meteor extends SmoothMover{
                     
             health -= Player.damage;
             if(health <= 0){
+                applyPowerup();
                 explosionTimer.mark();
                 isExploding = true;
             }
@@ -74,7 +77,8 @@ public class Meteor extends SmoothMover{
         
         else if(isTouching(Type2.class)){
             health -= (Player.damage + 1);
-            if(health <= 0){                    
+            if(health <= 0){
+                applyPowerup();
                 explosionTimer.mark();
                 isExploding = true;
             }
@@ -85,6 +89,17 @@ public class Meteor extends SmoothMover{
             setLocation(getX(), getY() - 20);
             
             if(health <= 0){
+                applyPowerup();
+                explosionTimer.mark();
+                isExploding = true;
+            }
+        }
+        
+        else if(isTouching(Type4.class)){
+            health -= (Player.damage + 3);
+            
+            if(health <= 0){
+                applyPowerup();
                 explosionTimer.mark();
                 isExploding = true;
             }
@@ -108,6 +123,8 @@ public class Meteor extends SmoothMover{
 
     int frame = 0;
     public void explode(){
+        explosionSound.play();
+        
         SpaceShooter world = (SpaceShooter) getWorld();
         if(explosionTimer.millisElapsed() > 10){
             frame += 1;
@@ -115,7 +132,6 @@ public class Meteor extends SmoothMover{
             if(frame == images.length){
                 world.score += points;
                 XP.currentXP += points;
-                applyPowerup();
             
                 getWorld().removeObject(this);
             } 
@@ -161,7 +177,9 @@ public class Meteor extends SmoothMover{
                 break;
                 
             case 2: 
-                Player.damage++;
+                if(Player.damage < 5){
+                    Player.damage++;
+                }
                 break;
                 
             case 3:
@@ -177,7 +195,9 @@ public class Meteor extends SmoothMover{
                 else{
                     world.shield = 10;
                 }
-                Player.damage++;
+                if(Player.damage < 5){
+                    Player.damage++;
+                }
                 if(Player.atkSpd > 45){
                     Player.atkSpd -= 5;
                 }

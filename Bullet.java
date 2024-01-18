@@ -21,7 +21,7 @@ public class Bullet extends Actor{
         else{
             setLocation(getX(), getY() - speed);
         
-            if(isTouching(Basic.class) || isTouching(Stage1.class) || isTouching(Stage2.class) || isTouching(MiniBoss.class)){
+            if(isTouching(Mini.class) || isTouching(Basic.class) || isTouching(Stage1.class) || isTouching(Stage2.class) || isTouching(MiniBoss.class) || isTouching(FinalBoss.class)){
                 health--;            
             }            
             if(isAtEdge()){

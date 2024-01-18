@@ -1,8 +1,8 @@
 import greenfoot.*; 
 
-public class MiniBoss extends Meteor{
+public class Mini extends Meteor{
     
-    public MiniBoss(String image, int xPos, int yPos, int health, double speed, int points, int livesTaken){
+    public Mini(String image, int xPos, int yPos, int health, double speed, int points, int livesTaken){
         super(image, 0, xPos, yPos, health, speed, points, livesTaken);
     }
     
@@ -52,16 +52,6 @@ public class MiniBoss extends Meteor{
             health -= (Player.damage + 2);
             
             if(health <= 0){
-                explosionTimer.mark();
-                isExploding = true;
-            }
-        }
-        
-        else if(isTouching(Type4.class)){
-            health -= (Player.damage + 3);
-            
-            if(health <= 0){
-                applyPowerup();
                 explosionTimer.mark();
                 isExploding = true;
             }

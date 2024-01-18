@@ -108,19 +108,19 @@ public class Player extends Actor{
     }
     
     private void setType(){
-        if(XP.level < 4){
+        if(XP.level < 3){
             type = 0;
             setImage("player0.png");
         }
-        else if(XP.level < 8){
+        else if(XP.level < 6){
             type = 1;
             setImage("player1.png");
         }
-        else if(XP.level < 12){
+        else if(XP.level < 10){
             type = 2;
             setImage("player2.png");
         }
-        else if(XP.level < 15){
+        else if(XP.level < 13){
             type = 3;
             setImage("player3.png");
         }
