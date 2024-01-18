@@ -1,6 +1,7 @@
 import greenfoot.*;  
 
 public class Player extends Actor{
+    // Creates default variables.  Variables are static so they can be referenced by other classes.
     public static int size = 1;
     public static int speed = 1;
     public static int bullets = 1;
@@ -8,6 +9,7 @@ public class Player extends Actor{
     public static int damage = 1;
     public static int type = 0;
     
+    // Determines when an attack should be fired
     int attackGauge;
     
     public Player(int size, int speed, int bullets, int atkSpd){
@@ -18,6 +20,7 @@ public class Player extends Actor{
     }
     
     public void act(){
+        // Basic movement
         if(Greenfoot.isKeyDown("a") && getX() > 0){
             setLocation(getX() - speed, getY());
         }
@@ -30,13 +33,17 @@ public class Player extends Actor{
         if(Greenfoot.isKeyDown("s") && getY() < 800){
             setLocation(getX(), getY() + speed);
         }
+        
+        // Set the type of the meteor depending on the level
         setType();
         
+        // Constantly increase the attack gauge and attempt to fire a shot
         attackGauge++;
         attack();
         
     }
     
+    // The attack method checks for the type and if the attack gauge has been filled.  If both requirements are met, a shot of that type is fired.
     private void attack(){
         if(type == 0){
             if(attackGauge >= atkSpd){
@@ -70,6 +77,9 @@ public class Player extends Actor{
         }
     }
     
+    /* The methods belows create different bullets and determines their stats.
+     * Different methods are called when there is a different level
+     */
     private void attack0(){
         SpaceShooter world = (SpaceShooter) getWorld();
         Type0 bullet = new Type0(damage, 1, 3, 1);
@@ -107,6 +117,7 @@ public class Player extends Actor{
         world.addObject(bullet, getX(), getY() - 40);
     }
     
+    // Set the type depending on the level
     private void setType(){
         if(XP.level < 3){
             type = 0;

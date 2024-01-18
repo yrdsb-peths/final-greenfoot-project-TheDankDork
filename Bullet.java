@@ -1,6 +1,7 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;  
 
 public class Bullet extends Actor{
+    // Basic variable all bullets require
     public int damage = 1;
     public int size = 1;
     public int speed = 1;
@@ -15,6 +16,8 @@ public class Bullet extends Actor{
     
     public void act(){
         SpaceShooter world = (SpaceShooter) getWorld();
+        
+        //If health is 0 remove immediately.  Otherwise, check its collision with meteors. 
         if(health <= 0){
             world.removeObject(this);
         }

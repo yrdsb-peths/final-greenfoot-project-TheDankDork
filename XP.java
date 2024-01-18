@@ -16,6 +16,7 @@ public class XP extends Actor{
     public void act(){
         SpaceShooter world = (SpaceShooter) getWorld();
         
+        // XP and level scaling
         if(levelXP <= currentXP){
             level++;
             levelXP = (int) (levelXP * 1.5);
@@ -26,6 +27,7 @@ public class XP extends Actor{
         
         setImage(xpBar[roundedEquiv]);
         
+        // Adjust location depending on the current image
         for(int i = 0; i < 10; i++){
             if(roundedEquiv == i){
                 setLocation(105 + (5 * i), 730);

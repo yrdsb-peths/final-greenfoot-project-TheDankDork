@@ -15,6 +15,7 @@ public class Type4 extends Bullet{
     public void act(){
         SpaceShooter world = (SpaceShooter) getWorld();
         if(health <= 0){
+            // Different from a normal projectile, this one will spawn 5 cluster shots when destroyed
             world.addObject(cluster1, getX(), getY() - 45);
             world.addObject(cluster2, getX() - 45, getY());
             world.addObject(cluster3, getX() + 45, getY());

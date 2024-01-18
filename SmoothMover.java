@@ -1,5 +1,9 @@
 import greenfoot.*;
 
+/* The entire class allows meteors to move by a decimal amount each time.
+ * This allows for smoother and slower movement
+ */
+
 public abstract class SmoothMover extends Actor{
     private double exactX;
     private double exactY;

@@ -1,12 +1,14 @@
 import greenfoot.*;  
 
 public class SpaceShooter extends World{
+    // Set default scores, shield, lives
     public int score = 0;
     public int shield = 5;
     public int lives = 3;
     
     public int speedMod = 0;  // speedMod allows the game to gradually increase speed
     
+    // Set gauges to determine when to spawn meteors
     public int miniGauge = 0;
     public int basicGauge = -500;
     public int Stage1Gauge = -2000;
@@ -14,13 +16,16 @@ public class SpaceShooter extends World{
     public int miniBossGauge = -100000;
     public int finalBossGauge = -300000;
     
-    
     boolean gameActive = false;
     
+    // Wave determines what bosses to spawn alongside the basic gauge and scores
     public int wave = 0;
     
     public static int highscore;
     
+    /* The code below creates all objects in the world.
+     * This allows them to be ready for use at any time and ensures they are only created once.
+     */
     Player player = new Player(1, 4, 1, 100);
     
     Background bg1 = new Background();
@@ -51,7 +56,8 @@ public class SpaceShooter extends World{
     GreenfootSound titleSound = new GreenfootSound("sounds/title_audio.mp3");
     GreenfootSound gameSound = new GreenfootSound("sounds/game_audio.mp3");
     
-    public SpaceShooter(){    
+    public SpaceShooter(){
+        // Generate the basic world with the necessary components
         super(400, 800, 1, false);
         
         displayScore = new Text("Score: ", score, 30);
@@ -70,6 +76,7 @@ public class SpaceShooter extends World{
     }
     
     public void act(){
+        // Play the sound effect and constantly check for buttons pressed
         titleSound.playLoop(); 
         
         checkStartPressed();
@@ -78,11 +85,15 @@ public class SpaceShooter extends World{
         checkHomePressed();
         checkRestartPressed();
         
+        // Once the game is detected to be active it will enter the game loop until game over
         if(gameActive){
             gameLoop();
         }
     }
     
+    /* The following methods check for buttons pressed and determines what to do with them
+     * Depending on the button pressed, the method will add or remove variables, images, button, etc.
+     */
     public void checkStartPressed(){        
         if(Greenfoot.mouseClicked(startButton)){
             removeObject(startButton);
@@ -187,6 +198,7 @@ public class SpaceShooter extends World{
         
     }
     
+    // Initializes the game by resetting all variables
     public void initGame(){ 
         gameSound.playLoop();
         
@@ -211,6 +223,7 @@ public class SpaceShooter extends World{
         gameActive = true;
     }
     
+    // Game loop
     public void gameLoop(){
         if(lives < 1){
             if(score > highscore){
@@ -221,13 +234,15 @@ public class SpaceShooter extends World{
             removeObject(player);
         }
         else{
+            // Constantly increase the gauge and check if a meteor can be spawned
             increaseGauge();
             spawnMeteor();
             
             // Constantly update the score and shield display
             displayScore.setValue(score);
             displayLevel.setValue(XP.level);
-                    
+            
+            // Increase the speedMod (with a maximum value)
             if(((score % 20) == 0) && (speedMod < 20)){
                 speedMod = score/20;
             }
@@ -235,6 +250,7 @@ public class SpaceShooter extends World{
 
     }
     
+    // Determines what to do once game is over
     public void gameOver(){
         addObject(gameover, 200, 200);
         addObject(homeButton, 100, 440);
@@ -244,11 +260,14 @@ public class SpaceShooter extends World{
         basicGauge = -500;
         Stage1Gauge = -2000;
         Stage2Gauge = -5000;
+        miniBossGauge = -100000;
+        finalBossGauge = -300000;
         wave = 0;
         
         gameActive = false;
     }
     
+    // Modify score based on the points a meteor carries
     public void modifyScore(int points){    
         score += points;
     }
@@ -258,14 +277,17 @@ public class SpaceShooter extends World{
         shield += amount;    
     }
     
+    // Increase gauge for meteor spawn
     private void increaseGauge(){
         miniGauge++;
         basicGauge++;
         Stage1Gauge++;
         Stage2Gauge++;
-        
+        miniBossGauge++;
+        finalBossGauge++;
     }
     
+    // Determines whether or not a meteor should be spawned.  A meteor is spawned once its gauge has been filled.
     public void spawnMeteor(){
         if(miniGauge >= (200 - speedMod * 5)){
             spawnMini();
@@ -309,7 +331,7 @@ public class SpaceShooter extends World{
         }
     }
     
-    
+    // Creates the meteors with the correct values
     public void spawnMini(){
         int x = Greenfoot.getRandomNumber(400);
         Mini mini = new Mini("mini_meteor", x, 0, 1, 1, 1, 1);

@@ -1,6 +1,7 @@
 import greenfoot.*;  
 
 public class Meteor extends SmoothMover{
+    // Create the default variables all meteors will have
     public int powerup = 0;
     public int type = 0;
     public String image;
@@ -11,7 +12,7 @@ public class Meteor extends SmoothMover{
     public double speed = 1;
     public int points = 1;
     public int damage = 1;
-    public boolean isExploding = false;
+    public boolean isExploding = false; // Determines whether or not the animation for exploding should play
 
     GreenfootImage[] images = new GreenfootImage[25];
     SimpleTimer explosionTimer = new SimpleTimer();
@@ -40,7 +41,9 @@ public class Meteor extends SmoothMover{
         yPos += (speed); // Allows the meteor to slowly fall down
         setLocation(xPos, yPos); // Set location of the meteor
 
-        // Remove self and take away lives if touching ground
+        /* The following if statements detect the situation the meteor is in.
+         * Depending on what the meteor is touching is removes lives, adds points, applies powerups, etc.
+         */
         if(isTouching(Player.class)){
             if(world.shield > damage){
                 world.modifyShield(-damage);
@@ -60,8 +63,7 @@ public class Meteor extends SmoothMover{
             world.removeObject(this);
         }
               
-        else if(isTouching(Type0.class) || 
-                isTouching(Type1.class) || 
+        else if(isTouching(Type0.class) ||  
                 isTouching(ClusterL.class) || 
                 isTouching(ClusterR.class) || 
                 isTouching(ClusterLF.class) || 
@@ -73,9 +75,9 @@ public class Meteor extends SmoothMover{
                 explosionTimer.mark();
                 isExploding = true;
             }
-        }   
+        }
         
-        else if(isTouching(Type2.class)){
+        else if(isTouching(Type1.class)){
             health -= (Player.damage + 1);
             if(health <= 0){
                 applyPowerup();
@@ -84,8 +86,17 @@ public class Meteor extends SmoothMover{
             }
         }
         
-        else if(isTouching(Type3.class)){
+        else if(isTouching(Type2.class)){
             health -= (Player.damage + 2);
+            if(health <= 0){
+                applyPowerup();
+                explosionTimer.mark();
+                isExploding = true;
+            }
+        }
+        
+        else if(isTouching(Type3.class)){
+            health -= (Player.damage + 1);
             setLocation(getX(), getY() - 20);
             
             if(health <= 0){
@@ -105,6 +116,7 @@ public class Meteor extends SmoothMover{
             }
         }
         
+        // If the game is over, remove itself immediately
         else if(!world.gameActive){
             world.removeObject(this);
         }
@@ -121,6 +133,7 @@ public class Meteor extends SmoothMover{
         return false;
     }
 
+    // Constantly set the frames of the explosion.  When completed, remove itself
     int frame = 0;
     public void explode(){
         explosionSound.play();
@@ -141,6 +154,7 @@ public class Meteor extends SmoothMover{
         }
     }
     
+    // Apply the necessary powerup, if needed
     public void givePowerup(){
         if(powerup < 75){
             setImage(image + ".png");
@@ -164,6 +178,7 @@ public class Meteor extends SmoothMover{
         }
     }
     
+    // Once a powerup is given, the respective code is called to change variables and apply the changes
     public void applyPowerup(){
         SpaceShooter world = (SpaceShooter) getWorld();
         switch(type){
